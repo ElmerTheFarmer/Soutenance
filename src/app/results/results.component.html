@@ -1,0 +1,13 @@
+<h1>Voici les résultats météorologiques de votre position :</h1>
+<div *ngIf="data">
+    <h2>Température Moyenne : {{ (data.main.temp-273.15).toFixed(1) }} °C</h2>
+    <h2>Température Ressentie : {{ (data.main.feels_like-273.15).toFixed(1) }} °C</h2>
+    <h2>Température Minimum : {{ (data.main.temp_min-273.15).toFixed(1) }} °C</h2>
+    <h2>Température Maximum : {{ (data.main.temp_max-273.15).toFixed(1) }} °C</h2>
+    <h2>Pression atmosphérique : {{ data.main.pressure }} hPa</h2>
+    <h2>Taux d'humidité : {{ data.main.humidity }} %</h2>
+  </div>
+  
+<div *ngIf="!data">
+    <p>No data found.</p>
+</div>
