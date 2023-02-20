@@ -17,13 +17,12 @@ export class GetweatherComponent {
   }
 
   // ngOnInit(): void { 
-    
   // }
 
   onSubmit() {
      this.http.get(`https://api.openweathermap.org/data/2.5/weather?lat=${this.lat}&lon=${this.lon}&appid=8118ed6ee68db2debfaaa5a44c832918`)
   .subscribe(data => {
-     this.router.navigate(['/results', JSON.stringify(data)]);; 
+     this.router.navigate(['/results', JSON.stringify(data)]); 
    });
   }
 }

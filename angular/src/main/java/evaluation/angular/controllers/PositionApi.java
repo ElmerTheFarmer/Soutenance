@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,43 +34,43 @@ public class PositionApi {
 		
 	}
 	
-	@GetMapping("/position-id")
-	public Position getPosById(@RequestParam Long id){
+	@GetMapping("/position/{id}")
+	public Position getPosById(@PathVariable Long id){
 		return posServ.getById(id);
 		
 	}
 	
-	@GetMapping("/positions-city")
-	public List<Position> getPosByCity(@RequestParam String city){
+	@GetMapping("/positions-city/{city}")
+	public List<Position> getPosByCity(@PathVariable String city){
 		return posServ.getByCity(city);
 		
 	}
 	
-	@GetMapping("/position-city")
-	public Position getOneByCity(@RequestParam String city){
+	@GetMapping("/position-city/{city}")
+	public Position getOneByCity(@PathVariable String city){
 		return posServ.getOneByCity(city);
 		
 	}
 	
-	@GetMapping("/positions-country")
-	public List<Position> getPosByCountry(@RequestParam String country){
+	@GetMapping("/positions-country/{country}")
+	public List<Position> getPosByCountry(@PathVariable String country){
 		return posServ.getByCountry(country);
 		
 	}
 	
-	@GetMapping("/position-country")
-	public Position getOneByCountry(@RequestParam String country){
+	@GetMapping("/position-country/{country}")
+	public Position getOneByCountry(@PathVariable String country){
 		return posServ.getOneByCountry(country);
 		
 	}
 	
-	@GetMapping("/findposition")
-	public Position getPosByCityAndCountry(@RequestParam String city, @RequestParam String country){
+	@GetMapping("/findposition/{country}/{city}")
+	public Position getPosByCityAndCountry(@PathVariable String city, @PathVariable String country){
 		return posServ.getByCityAndCountry(city, country);
 	}
 	
-	@GetMapping("/position-coord")
-	public Position getPosByCoordinates(@RequestParam Float lat, @RequestParam Float lng){
+	@GetMapping("/position-coord/{lat}/{lng}")
+	public Position getPosByCoordinates(@PathVariable Float lat, @PathVariable Float lng){
 		return posServ.getByCoordinates(lat, lng);
 		
 	}
@@ -79,13 +80,13 @@ public class PositionApi {
 		return posServ.addPosition(position);
 	}
 	
-	@PutMapping("/modify-position")
-	public Position updatePosition(@RequestParam Long id, @RequestBody Position position) {
+	@PutMapping("/modify-position/{id}")
+	public Position updatePosition(@PathVariable Long id, @RequestBody Position position) {
 		return posServ.updatePosition(id, position);
 	}
 	
-	@DeleteMapping("/delete")
-	public void deleteById(@RequestParam Long id) {
+	@DeleteMapping("/delete/{id}")
+	public void deleteById(@PathVariable Long id) {
 		posServ.deleteById(id);
 	}
 	
