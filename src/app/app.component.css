@@ -1,0 +1,16 @@
+h1{
+    color: blueviolet;
+    text-align: center;
+    font-size: 74px;
+}
+
+.search{
+    display: flex;
+    justify-content: space-around;
+    height: 2cm;
+}
+
+.search a {
+    color: darkred;
+    font-size: xx-large;
+}

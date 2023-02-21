@@ -1,16 +1,15 @@
 @import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
+
 .form-control{
     width: 10cm;
 }
 
 .form-group{
     display: flex;
-    justify-content: left;
-    margin-left: 4cm;
+    justify-content: center;
 }
 
 .boutons{
     display: flex;
-    justify-content: left;
-    margin-left: 8cm;
+    justify-content: center;
 }

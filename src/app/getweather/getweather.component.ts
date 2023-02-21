@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 export class GetweatherComponent {
   lat: number;
   lon: number;
+  place: any;
 
   constructor(private http: HttpClient, private router: Router) {
     this.lat = 0;
@@ -22,7 +23,12 @@ export class GetweatherComponent {
   onSubmit() {
      this.http.get(`https://api.openweathermap.org/data/2.5/weather?lat=${this.lat}&lon=${this.lon}&appid=8118ed6ee68db2debfaaa5a44c832918`)
   .subscribe(data => {
-     this.router.navigate(['/results', JSON.stringify(data)]); 
+     this.router.navigate(['/results', JSON.stringify(
+      {
+        place: this.place,
+        data
+        }
+     )]); 
    });
   }
 }

@@ -21,6 +21,10 @@ public class PositionService {
 		return this.posRepo.findAll();
 	}
 	
+	public List<Position> getCountries(){
+		return this.posRepo.allCountries();
+	}
+	
 	public Position getById(Long id) {
 		return this.posRepo.findById(id).get();
 	}
@@ -58,7 +62,7 @@ public class PositionService {
 				return p;
 			}
 		}
-		throw new EntityNotFoundException("No entity found for coordinates lat : "+lat+" and long : "+lng);
+		return null;
 	}
 	
 	public Position addPosition(Position position) {

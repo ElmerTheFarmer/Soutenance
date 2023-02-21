@@ -34,6 +34,12 @@ public class PositionApi {
 		
 	}
 	
+	@GetMapping("/countries")
+	public List<Position> allCountries(){
+		return posServ.getCountries();
+		
+	}
+	
 	@GetMapping("/position/{id}")
 	public Position getPosById(@PathVariable Long id){
 		return posServ.getById(id);

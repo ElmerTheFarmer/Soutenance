@@ -1,0 +1,35 @@
+<form (ngSubmit)="onSubmit()" #cityForm="ngForm">
+
+    <div class="form-group">
+      <label for="country">Pays :</label>
+      <select class="form-control" id="country"
+              required
+              [(ngModel)]="country" name="country"
+              (change)="selectOption($any($event.target).value)"
+              #pays="ngModel">
+        <option *ngFor="let pos of countries" [ngValue]="pos.country">{{pos.country}}</option>
+      </select>
+      <div [hidden]="pays.valid || pays.pristine" class="alert alert-danger">
+        Country is required
+      </div>
+    </div>
+
+    <div class="form-group">
+        <label for="city">City :</label>
+        <select class="form-control" id="city"
+                required
+                [(ngModel)]="city" name="city"
+                #ville="ngModel">
+          <option *ngFor="let cit of cities" [value]="cit.city">{{cit.city}}</option>
+        </select>
+        <div [hidden]="ville.valid || ville.pristine" class="alert alert-danger">
+          City is required
+        </div>
+      </div>
+    <div class="boutons">
+    <button type="submit" class="btn btn-success" [disabled]="!cityForm.form.valid">Submit</button>
+    <button type="button" class="btn btn-default" (click)="cityForm.reset()">Reset Form</button>
+    </div>
+  </form>
+
+  

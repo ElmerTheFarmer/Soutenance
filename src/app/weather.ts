@@ -1,3 +1,5 @@
+import { Position } from "./position";
+
 export interface Weather {
     temp : number;
     feels_like : number;
@@ -5,7 +7,7 @@ export interface Weather {
     temp_max : number;
     pressure : number;
     humidity : number;
-    sea_level : number;
-    grnd_level : number;
+    timestamp : Date;
+    position: Position;
     
 }

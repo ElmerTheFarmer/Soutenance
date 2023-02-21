@@ -1,13 +1,22 @@
 <h1>Voici les résultats météorologiques de votre position :</h1>
-<div *ngIf="data">
-    <h2>Température Moyenne : {{ (data.main.temp-273.15).toFixed(1) }} °C</h2>
-    <h2>Température Ressentie : {{ (data.main.feels_like-273.15).toFixed(1) }} °C</h2>
-    <h2>Température Minimum : {{ (data.main.temp_min-273.15).toFixed(1) }} °C</h2>
-    <h2>Température Maximum : {{ (data.main.temp_max-273.15).toFixed(1) }} °C</h2>
-    <h2>Pression atmosphérique : {{ data.main.pressure }} hPa</h2>
-    <h2>Taux d'humidité : {{ data.main.humidity }} %</h2>
+<div *ngIf="obj" class="res">
+    <h2><img src="http://openweathermap.org/img/wn/{{picture}}@4x.png"></h2>
+    <h2>Température Moyenne : {{ (obj.data.main.temp-273.15).toFixed(1) }} °C</h2>
+    <h2>Température Ressentie : {{ (obj.data.main.feels_like-273.15).toFixed(1) }} °C</h2>
+    <h2>Température Minimum : {{ (obj.data.main.temp_min-273.15).toFixed(1) }} °C</h2>
+    <h2>Température Maximum : {{ (obj.data.main.temp_max-273.15).toFixed(1) }} °C</h2>
+    <h2>Pression atmosphérique : {{ obj.data.main.pressure }} hPa</h2>
+    <h2>Taux d'humidité : {{ obj.data.main.humidity }} %</h2>
   </div>
 
-<div *ngIf="!data">
-    <p>No data found.</p>
+<div *ngIf="!obj">
+    <h3>No data found.</h3>
 </div>
+
+<div *ngIf="obj.place" class="boutons">
+<button type="button" class="btn btn-default" (click)="add()">Enregistrer ces données dans la base</button>
+</div>
+
+<div *ngIf="added" class="message">
+  <h3>Résultats ajoutés à la base de données !</h3>
+  </div>

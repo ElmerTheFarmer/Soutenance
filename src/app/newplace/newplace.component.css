@@ -1,0 +1,29 @@
+@import url('https://unpkg.com/bootstrap@3.3.7/dist/css/bootstrap.min.css');
+
+.form-control{
+    width: 10cm;
+}
+
+.form-group{
+    display: flex;
+    justify-content: right;
+    margin-right: 3cm;
+}
+
+.boutons{
+    display: flex;
+    justify-content: right;
+    margin-right: 6cm;
+}
+
+.message{
+    color: deepskyblue;
+    text-align: right;
+    margin-right: 4cm;
+}
+
+.error{
+    color: red;
+    text-align: right;
+    margin-right: 2cm;
+}

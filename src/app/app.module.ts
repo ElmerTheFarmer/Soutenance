@@ -7,12 +7,16 @@ import { GetweatherComponent } from './getweather/getweather.component';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { ResultsComponent } from './results/results.component';
+import { FindbycityComponent } from './findbycity/findbycity.component';
+import { NewplaceComponent } from './newplace/newplace.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GetweatherComponent,
-    ResultsComponent
+    ResultsComponent,
+    FindbycityComponent,
+    NewplaceComponent
   ],
   imports: [
     BrowserModule,
