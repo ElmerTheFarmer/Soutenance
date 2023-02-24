@@ -9,6 +9,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { ResultsComponent } from './results/results.component';
 import { FindbycityComponent } from './findbycity/findbycity.component';
 import { NewplaceComponent } from './newplace/newplace.component';
+import { MapBoxComponent } from './map-box/map-box.component';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,13 +19,16 @@ import { NewplaceComponent } from './newplace/newplace.component';
     GetweatherComponent,
     ResultsComponent,
     FindbycityComponent,
-    NewplaceComponent
+    NewplaceComponent,
+    MapBoxComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
     AppRoutingModule,
+    MatButtonToggleModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
