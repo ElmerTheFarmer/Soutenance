@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
+import { Mark } from './mark';
 import { CustomGeoJson } from './map';
 
-const API_URL = 'http://localhost:3000/markers';
+// Jacques
+// const API_URL = 'http://localhost:3000/markers';
+
+const API_URL = 'http://localhost:8080/mark';
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -15,10 +18,25 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class MapService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
+  // Méthode de Jacques
   getMarkers(): Observable<CustomGeoJson[]> {
-    return this.http.get<CustomGeoJson[]>(API_URL);
+    return this.http.get<CustomGeoJson[]>(API_URL+`/all`);
+  }
+
+  // getMarkers(): Observable<CustomGeoJson[]> {
+  //   var marks = this.http.get<Mark[]>(API_URL + "/all");
+  //   var markJson = new CustomGeoJson(coordinates, {
+  //     message: this.message,
+  //     image: this.iconId,
+  //   });
+  //   return this.http.get<CustomGeoJson[]>(API_URL);
+  // }
+
+  addMark(request: Mark): Observable<Mark> {
+    console.log('Bonjour Bonjour');
+    return this.http.post<Mark>(API_URL+`/add`, request);
   }
 
   createMarker(data: CustomGeoJson): Observable<CustomGeoJson> {
