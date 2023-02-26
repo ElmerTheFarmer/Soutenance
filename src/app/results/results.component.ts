@@ -31,7 +31,6 @@ export class ResultsComponent {
 
   getData(): void {
     this.obj = JSON.parse(this.route.snapshot.paramMap.get('data')!);
-    console.log("bonjour !");
     console.log(this.obj);
     console.log(this.obj.data.main);
     console.log(this.obj.place);

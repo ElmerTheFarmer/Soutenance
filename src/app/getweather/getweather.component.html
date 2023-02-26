@@ -7,7 +7,7 @@
              #latitude="ngModel">
       <div [hidden]="latitude.valid || latitude.pristine"
            class="alert alert-danger">
-        Latitude is required
+           Ce champs ne peut être vide
       </div>
     </div>
     <div class="form-group">
@@ -18,11 +18,11 @@
                #longitude="ngModel">
         <div [hidden]="longitude.valid || longitude.pristine"
              class="alert alert-danger">
-          Longitude is required
+          Ce champs ne peut être vide
         </div>
       </div>
     <div class="boutons">
-    <button type="submit" class="btn btn-success" [disabled]="!weatherForm.form.valid">Submit</button>
-    <button type="button" class="btn btn-default" (click)="weatherForm.reset()">Reset Form</button>
+    <button type="submit" class="btn btn-success" [disabled]="!weatherForm.form.valid">Envoyer</button>
+    <button type="button" class="btn btn-default" (click)="weatherForm.reset()">Réinitialiser</button>
   </div>
   </form>

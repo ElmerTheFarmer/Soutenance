@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Position } from './position';
 import { Observable } from 'rxjs';
 import { Weather } from './weather';
-import { Mark } from './mark';
 
 @Injectable({
   providedIn: 'root'
@@ -43,6 +42,12 @@ export class WeatherService {
     const findByCountry = `http://localhost:8080/api/positions-country/${country}`;
     console.log(findByCountry);
     return this.http.get<Position[]>(findByCountry);
+  }
+
+  getWeatherFromCoords(lat: number, lng: number): Observable<any> {
+    return this.http.get(
+      `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=8118ed6ee68db2debfaaa5a44c832918`
+    );
   }
 
   addTemps(request: Weather): Observable<Weather> {

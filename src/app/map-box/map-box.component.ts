@@ -6,6 +6,8 @@ import { environment } from 'src/environments/environment.development';
 import { FeatureCollection } from 'geojson';
 import { MatButtonToggleGroup } from '@angular/material/button-toggle';
 import { Mark } from '../mark';
+import { HttpClient } from '@angular/common/http';
+import { WeatherService } from '../weather.service';
 
 @Component({
   selector: 'app-map-box',
@@ -14,10 +16,10 @@ import { Mark } from '../mark';
 })
 export class MapBoxComponent {
   map!: Map; // la carte
-  style: string = 'mapbox://styles/mapbox/light-v11'; // style de la carte
+  style: string = 'mapbox://styles/mapbox/dark-v11'; // style de la carte
   lat: number = 46.2276; // latitude à l'initialisation
   lng: number = 2.2137; // longitude à l'initialisation
-  message: string = 'Bonjour'; // message à afficher sous le marqueur
+  message: string = ''; // message à afficher sous le marqueur
 
   source: any; // source pour créer un marqueur (image)
   markers: CustomGeoJson[] = []; // liste des marqueurs
@@ -25,6 +27,9 @@ export class MapBoxComponent {
   iconId: string = '10d'; // icône représentant la météo
   sourceId: string = 'weather'; // nom par défaut de la source de données
   layerId: string = 'weather-layer'; // nom par défaut du layer
+
+  place: any; // récupération des données météo par coordonnées par clic
+  data: any // récupération des données météo par coordonnées par clic
 
   // état initial du bouton
   toggleButtonState: string = 'weather';
@@ -40,7 +45,10 @@ export class MapBoxComponent {
     'yellow',
   ];
 
-  constructor(private mapService: MapService) { }
+  constructor(
+    private http: HttpClient,
+    private mapService: MapService,
+    private weatherService: WeatherService) { }
 
   ngOnInit() {
     // zoom sur la localisation de l'utilisateur
@@ -72,12 +80,11 @@ export class MapBoxComponent {
           message: data[i].city_ascii + ' (' + data[i].country + ') ' + data[i].temp + '°C',
           image: data[i].picture,
         });
-        newMarker.id = data[i].id;
+        newMarker.id = data[i].id,
           this.markers.push(newMarker);
-        console.log(newMarker)
       }
       // Je ne sais pas si les deux lignes suivantes sont nécessaires mais le marker ne s'affiche pas
-      //this.loadImage();
+      // this.loadImage();
       //this.setMarkers();
     });
   }
@@ -128,21 +135,69 @@ export class MapBoxComponent {
           event.lngLat.lng,
           event.lngLat.lat,
         ];
-        // création d'un nouveau marqueur
+
+        // création d'un nouveau marqueur Mark
+        var mark: Mark = {
+          temp: 0,
+          lng: coordinates[0],
+          lat: coordinates[1],
+          picture: '',
+          country: '',
+          city_ascii: ''
+        }
+
+        // récupération de la météo à cette localisation
+        this.weatherService.getWeatherFromCoords(coordinates[1], coordinates[0]).subscribe({
+          next: (data) => {
+            const {
+              // feels_like: feelsLike,
+              // humidity,
+              // pressure,
+              temp,
+              // temp_max: tempMax,
+              // temp_min: tempMin,
+            } = data.main;
+
+            mark.city_ascii = data.name;
+            mark.temp = (temp - 273.15);
+            mark.picture = data.weather[0].icon;
+            mark.country = data.sys.country;
+          },
+          complete: () => {
+            console.log('Marqueur créé : ');
+            console.log(mark);
+            // Enregistrement du marqueur en bdd
+            console.log('Tentative d enregistrement du marqueur en bdd...');
+            this.mapService.addMark(mark).subscribe(response =>
+              console.log(response));
+          }
+        });
+
+        // création d'un nouveau marqueur CustomGeoJson
         const newMarker = new CustomGeoJson(coordinates, {
           message: this.message,
           image: this.iconId,
         });
-        // ajout du marqueur en base de données
-        this.mapService.createMarker(newMarker).subscribe((data) => {
-          this.markers.push(data);
-          // Chargement de l'image du marqueur
-          this.loadImage();
-          // Ajout du marqueur sur la carte
-          this.setMarkers();
-        });
+
+        // Chargement de l'image du marqueur
+        this.loadImage();
+        // Ajout du marqueur sur la carte
+        this.setMarkers();
+
+        // // Méthode de Jacques
+        // // ajout du marqueur en base de données
+        // this.mapService.createMarker(newMarker).subscribe((data) => {
+        //   this.markers.push(data);
+        //   // Chargement de l'image du marqueur
+        //   this.loadImage();
+        //   // Ajout du marqueur sur la carte
+        //   this.setMarkers();
+        // });
+
+
       });
     });
+
   }
 
   createLayer() {

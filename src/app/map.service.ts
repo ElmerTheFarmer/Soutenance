@@ -25,14 +25,15 @@ export class MapService {
     return this.http.get<Mark[]>(API_URL+ "/all");
   }
 
-  // Ajoute un marker depuis le formulaire findByCity
+  // Ajoute un marker en bdd depuis le formulaire findByCity
   addMark(request: Mark): Observable<Mark> {
     return this.http.post<Mark>(API_URL+`/add`, request);
   }
 
-  createMarker(data: CustomGeoJson): Observable<CustomGeoJson> {
-    return this.http.post<CustomGeoJson>(API_URL, data, httpOptions);
-  }
+  // // Ajoute un marker en bdd depuis un click sur la map
+  // createMarker(data: CustomGeoJson): Observable<CustomGeoJson> {
+  //   return this.http.post<CustomGeoJson>(API_URL, data, httpOptions);
+  // }
 
   // Supprime un marker dans la bdd
   removeMarker(id: number): Observable<Mark> {
