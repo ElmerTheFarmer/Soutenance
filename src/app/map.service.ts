@@ -20,18 +20,13 @@ const httpOptions = {
 export class MapService {
   constructor(private http: HttpClient) { }
 
-  // Méthode de Jacques
-  // getMarkers(): Observable<CustomGeoJson[]> {
-  //   return this.http.get<CustomGeoJson[]>(API_URL+`/all`);
-  // }
-
+  // Récupère tous les markers en bdd
   getMarkers(): Observable<Mark[]> {
-    console.log('Service getMarkers() appelé');
     return this.http.get<Mark[]>(API_URL+ "/all");
   }
 
+  // Ajoute un marker depuis le formulaire findByCity
   addMark(request: Mark): Observable<Mark> {
-
     return this.http.post<Mark>(API_URL+`/add`, request);
   }
 
@@ -39,7 +34,9 @@ export class MapService {
     return this.http.post<CustomGeoJson>(API_URL, data, httpOptions);
   }
 
-  removeMarker(id: number): Observable<CustomGeoJson> {
-    return this.http.delete<CustomGeoJson>(API_URL + `/${id}`);
+  // Supprime un marker dans la bdd
+  removeMarker(id: number): Observable<Mark> {
+    console.log('Delete marker with id=' +id);
+    return this.http.delete<Mark>(API_URL + `/delete/${id}`);
   }
 }

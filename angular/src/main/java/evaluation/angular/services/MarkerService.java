@@ -1,12 +1,8 @@
 package evaluation.angular.services;
 
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import evaluation.angular.entities.Marker;
-import evaluation.angular.entities.Temperature;
 import evaluation.angular.repositories.MarkerRepository;
 
 @Service
@@ -24,5 +20,13 @@ public class MarkerService {
 	
 	public Marker addMarker(Marker marker) {
 		return markerRepository.save(marker);
+	}
+	
+	public Marker findMarker(Long id) {
+		return markerRepository.findById(id).get();
+	}
+
+	public void delMarker(Long id) {
+		markerRepository.delete(findMarker(id));
 	}
 }

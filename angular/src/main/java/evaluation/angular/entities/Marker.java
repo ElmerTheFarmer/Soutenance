@@ -27,8 +27,23 @@ public class Marker {
 	
 	@Column(name = "picture")
 	private String picture;
+	
+	@Column(name = "country")
+	private String country;
+	
+	@Column(name = "city_ascii")
+	private String city_ascii;
 
 	public Marker() {
+	}
+
+	public Marker(Float lat, Float lng, Float temp, String picture, String country, String city_ascii) {
+		this.lat = lat;
+		this.lng = lng;
+		this.temp = temp;
+		this.picture = picture;
+		this.country = country;
+		this.city_ascii = city_ascii;
 	}
 
 	public Marker(Float lat, Float lng, Float temp, String picture) {
@@ -87,6 +102,22 @@ public class Marker {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getCity_ascii() {
+		return city_ascii;
+	}
+
+	public void setCity_ascii(String city_ascii) {
+		this.city_ascii = city_ascii;
 	}
 
 }

@@ -60,7 +60,9 @@ export class ResultsComponent {
       temp: newtemp.temp,
       lng: newtemp.position.lng,
       lat: newtemp.position.lat,
-      picture: this.picture
+      picture: this.picture,
+      country: this.obj.place.country,
+      city_ascii: this.obj.place.city_ascii
     }
     this.mapService.addMark(newMark).subscribe(response => console.log(response))
   }

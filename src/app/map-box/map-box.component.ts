@@ -68,17 +68,16 @@ export class MapBoxComponent {
           data[i].lng,
           data[i].lat,
         ]
-        console.log(coordinates);
          const newMarker = new CustomGeoJson(coordinates, {
-           message: data[i].temp+'°C',
+          message: data[i].city_ascii + ' ('+data[i].country+') '+ data[i].temp+'°C',
+          //message: data[i].temp+'°C',
            image: data[i].picture,
          });
-         console.log(newMarker);
          this.markers.push(newMarker);
       }
       // Je ne sais pas si les deux lignes suivantes sont nécessaires mais le marker ne s'affiche pas
-      this.loadImage();
-      this.setMarkers();
+      //this.loadImage();
+      //this.setMarkers();
     });
   }
 
