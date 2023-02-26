@@ -1,4 +1,5 @@
 export interface Mark {
+    id?: number,
     lat: number;
     lng: number;
     temp: number;

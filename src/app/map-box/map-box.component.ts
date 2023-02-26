@@ -40,7 +40,7 @@ export class MapBoxComponent {
     'yellow',
   ];
 
-  constructor(private mapService: MapService) {}
+  constructor(private mapService: MapService) { }
 
   ngOnInit() {
     // zoom sur la localisation de l'utilisateur
@@ -68,12 +68,13 @@ export class MapBoxComponent {
           data[i].lng,
           data[i].lat,
         ]
-         const newMarker = new CustomGeoJson(coordinates, {
-          message: data[i].city_ascii + ' ('+data[i].country+') '+ data[i].temp+'°C',
-          //message: data[i].temp+'°C',
-           image: data[i].picture,
-         });
-         this.markers.push(newMarker);
+        const newMarker = new CustomGeoJson(coordinates, {
+          message: data[i].city_ascii + ' (' + data[i].country + ') ' + data[i].temp + '°C',
+          image: data[i].picture,
+        });
+        newMarker.id = data[i].id;
+          this.markers.push(newMarker);
+        console.log(newMarker)
       }
       // Je ne sais pas si les deux lignes suivantes sont nécessaires mais le marker ne s'affiche pas
       //this.loadImage();
