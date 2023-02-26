@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Position } from './position';
 import { Observable } from 'rxjs';
 import { Weather } from './weather';
+import { Mark } from './mark';
 
 @Injectable({
   providedIn: 'root'
@@ -53,5 +54,5 @@ export class WeatherService {
     const addposurl = `http://localhost:8080/api/add-position`;
     return this.http.post<Position>(addposurl, request);
   }
-  
+
 }

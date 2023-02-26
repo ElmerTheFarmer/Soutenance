@@ -21,21 +21,17 @@ export class MapService {
   constructor(private http: HttpClient) { }
 
   // Méthode de Jacques
-  getMarkers(): Observable<CustomGeoJson[]> {
-    return this.http.get<CustomGeoJson[]>(API_URL+`/all`);
-  }
-
   // getMarkers(): Observable<CustomGeoJson[]> {
-  //   var marks = this.http.get<Mark[]>(API_URL + "/all");
-  //   var markJson = new CustomGeoJson(coordinates, {
-  //     message: this.message,
-  //     image: this.iconId,
-  //   });
-  //   return this.http.get<CustomGeoJson[]>(API_URL);
+  //   return this.http.get<CustomGeoJson[]>(API_URL+`/all`);
   // }
 
+  getMarkers(): Observable<Mark[]> {
+    console.log('Service getMarkers() appelé');
+    return this.http.get<Mark[]>(API_URL+ "/all");
+  }
+
   addMark(request: Mark): Observable<Mark> {
-    console.log('Bonjour Bonjour');
+
     return this.http.post<Mark>(API_URL+`/add`, request);
   }
 

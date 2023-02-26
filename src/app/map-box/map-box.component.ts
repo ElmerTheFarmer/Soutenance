@@ -5,6 +5,7 @@ import { CustomFeatureCollection, CustomGeoJson } from '../map';
 import { environment } from 'src/environments/environment.development';
 import { FeatureCollection } from 'geojson';
 import { MatButtonToggleGroup } from '@angular/material/button-toggle';
+import { Mark } from '../mark';
 
 @Component({
   selector: 'app-map-box',
@@ -61,8 +62,23 @@ export class MapBoxComponent {
 
   loadMarkers(): void {
     // Appel du service pour faire une requête HTTP
-    this.mapService.getMarkers().subscribe((data: CustomGeoJson[]) => {
-      this.markers = data;
+    this.mapService.getMarkers().subscribe((data: Mark[]) => {
+      for (let i = 0; i < data.length; i++) {
+        const coordinates: [number, number] = [
+          data[i].lng,
+          data[i].lat,
+        ]
+        console.log(coordinates);
+         const newMarker = new CustomGeoJson(coordinates, {
+           message: data[i].temp+'°C',
+           image: data[i].picture,
+         });
+         console.log(newMarker);
+         this.markers.push(newMarker);
+      }
+      // Je ne sais pas si les deux lignes suivantes sont nécessaires mais le marker ne s'affiche pas
+      this.loadImage();
+      this.setMarkers();
     });
   }
 
