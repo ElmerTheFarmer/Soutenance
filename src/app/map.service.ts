@@ -30,11 +30,6 @@ export class MapService {
     return this.http.post<Mark>(API_URL+`/add`, request);
   }
 
-  // // Ajoute un marker en bdd depuis un click sur la map
-  // createMarker(data: CustomGeoJson): Observable<CustomGeoJson> {
-  //   return this.http.post<CustomGeoJson>(API_URL, data, httpOptions);
-  // }
-
   // Supprime un marker dans la bdd
   removeMarker(id: number): Observable<Mark> {
     console.log('Delete marker with id=' +id);

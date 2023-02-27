@@ -16,7 +16,7 @@ import { WeatherService } from '../weather.service';
 })
 export class MapBoxComponent {
   map!: Map; // la carte
-  style: string = 'mapbox://styles/mapbox/dark-v11'; // style de la carte
+  style: string = 'mapbox://styles/mapbox/satellite-v9'; // style de la carte
   lat: number = 46.2276; // latitude à l'initialisation
   lng: number = 2.2137; // longitude à l'initialisation
   message: string = ''; // message à afficher sous le marqueur
@@ -80,8 +80,10 @@ export class MapBoxComponent {
           message: data[i].city_ascii + ' (' + data[i].country + ') ' + data[i].temp + '°C',
           image: data[i].picture,
         });
-        newMarker.id = data[i].id,
-          this.markers.push(newMarker);
+        newMarker.id = data[i].id;
+        this.markers.push(newMarker);
+        this.setMarkers;
+        this.loadImage;
       }
       // Je ne sais pas si les deux lignes suivantes sont nécessaires mais le marker ne s'affiche pas
       // this.loadImage();
@@ -175,9 +177,11 @@ export class MapBoxComponent {
 
         // création d'un nouveau marqueur CustomGeoJson
         const newMarker = new CustomGeoJson(coordinates, {
-          message: this.message,
-          image: this.iconId,
+          message: mark.city_ascii + ' (' + mark.country + ') ' + mark.temp + '°C',
+          image: mark.picture,
         });
+        newMarker.id = mark.id;
+        this.markers.push(newMarker);
 
         // Chargement de l'image du marqueur
         this.loadImage();
