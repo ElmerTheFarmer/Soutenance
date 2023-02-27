@@ -1,19 +1,18 @@
 <br>
 <h1><a routerLink="/map">Carte </a></h1>
 
-<br> <br> <br> <br> <br><br><br><br><br>
-<h1>Formulaires Météo</h1>
-<br> <br>
+<div *ngIf="hasRoute('/')">
 
-<nav>
+  <br> <br> <br> <br> <br><br><br><br><br>
+  <h1>Formulaires Météo</h1>
+  <br> <br>
+
   <div class="search">
     <!-- <a routerLink="/getweather">Meteo par coordonnées GPS</a> -->
     <a routerLink="/findbycity">Meteo par Ville et Pays</a>
     <a routerLink="/newplace">Ajouter une nouvelle Ville</a>
   </div>
-</nav>
 
-<!-- <app-map-box></app-map-box> -->
-<router-outlet>
+</div>
 
-</router-outlet>
+<router-outlet> </router-outlet>

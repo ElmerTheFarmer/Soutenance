@@ -6,6 +6,7 @@ import { ResultsComponent } from './results/results.component';
 import { FindbycityComponent } from './findbycity/findbycity.component';
 import { NewplaceComponent } from './newplace/newplace.component';
 import { MapBoxComponent } from './map-box/map-box.component';
+import { AppComponent } from './app.component';
 
 const routes: Routes = [
   { path: 'getweather', component: GetweatherComponent },
