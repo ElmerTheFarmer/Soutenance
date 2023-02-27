@@ -29,13 +29,13 @@
   </form>
 
   <div *ngIf="addedPos" class="message">
-    <h3>Position ajoutée à la base de données !</h3>
+    <h3>Données insérées dans la base</h3>
     </div>
 
     <div *ngIf="exists" class="error">
-    <h3>Position déja présente dans la base de données !</h3>
+    <h3>Les données existent déjà dans la base</h3>
     </div>
 
     <div *ngIf="dontfind" class="error">
-        <h3>La ville n'est pas réelle !</h3>
+        <h3>La position n'a pas été trouvée</h3>
         </div>

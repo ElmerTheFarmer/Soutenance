@@ -1,5 +1,5 @@
 h1 {
-    color: darkgreen;
+    color: brown;
     text-align: center;
     font-size: 40px;
 }
@@ -8,11 +8,11 @@ h1 {
 .res h2{
     display: flex;
     justify-content: center;
-    color: darkcyan;
+    color: black;
 }
 
 .res h2 img{
-    background-color: lightskyblue;
+    background-color: cyan;
 }
 
 .boutons{
@@ -21,6 +21,6 @@ h1 {
 }
 
 .message{
-    color: deepskyblue;
+    color: red;
     text-align: center;
 }
