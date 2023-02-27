@@ -56,7 +56,7 @@ export class ResultsComponent {
 
     // AJOUT D UN MARQUEUR DANS LA BDD
     var newMark: Mark = {
-      temp: newtemp.temp,
+      temp: parseInt(newtemp.temp.toFixed(1)),
       lng: newtemp.position.lng,
       lat: newtemp.position.lat,
       picture: this.picture,

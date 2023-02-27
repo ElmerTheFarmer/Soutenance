@@ -74,8 +74,6 @@ export class NewplaceComponent {
 
   onSubmit(){
       this.getCitiesFromCountry(this.code.country);
-      
-      
   }
 
 }

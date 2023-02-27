@@ -19,6 +19,7 @@ export class MapBoxComponent {
   style: string = 'mapbox://styles/mapbox/satellite-v9'; // style de la carte
   lat: number = 46.2276; // latitude à l'initialisation
   lng: number = 2.2137; // longitude à l'initialisation
+  filterCountry: string = '';
   message: string = ''; // message à afficher sous le marqueur
 
   source: any; // source pour créer un marqueur (image)
@@ -68,7 +69,21 @@ export class MapBoxComponent {
     this.iconId = this.colors[random_number];
   }
 
+  filterByCountry(country: string) {
+    if (this.filterCountry !== '') {
+      this.markers = this.markers.filter((m: CustomGeoJson) => m.properties.country !== this.filterCountry);
+      this.setMarkers();
+    }
+  }
 
+  // removeMarker(marker: CustomGeoJson) {
+  //   this.mapService.removeMarker(marker.id).subscribe(() => {
+  //     this.markers = this.markers.filter(
+  //       (m: CustomGeoJson) => m.id !== marker.id
+  //     );
+  //     this.setMarkers();
+  //   });
+  // }
 
   loadMarkers(): void {
     // Appel du service pour faire une requête HTTP
@@ -160,7 +175,7 @@ export class MapBoxComponent {
               temp,
             } = data.main;
             mark.city_ascii = data.name;
-            mark.temp = (temp - 273.15);
+            mark.temp = parseInt((temp - 273.15).toFixed(1));
             mark.picture = data.weather[0].icon;
             mark.country = data.sys.country;
           },
@@ -176,9 +191,8 @@ export class MapBoxComponent {
             const newMarker = new CustomGeoJson(coordinates, {
               message: mark.city_ascii + ' (' + mark.country + ') ' + mark.temp + '°C',
               image: mark.picture,
-              id: mark.id,
+              // id: mark.id,
             });
-            console.log(newMarker.properties.image);
             this.markers.push(newMarker);
             this.loadImage(newMarker.properties.image);
             // Ajout du marqueur sur la carte (Mise à jour des marqueurs)

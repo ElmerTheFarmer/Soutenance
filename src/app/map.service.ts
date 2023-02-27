@@ -2,10 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Mark } from './mark';
-import { CustomGeoJson } from './map';
-
-// Jacques
-// const API_URL = 'http://localhost:3000/markers';
 
 const API_URL = 'http://localhost:8080/mark';
 const httpOptions = {
