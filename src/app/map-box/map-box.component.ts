@@ -68,33 +68,36 @@ export class MapBoxComponent {
     this.iconId = this.colors[random_number];
   }
 
+
+
   loadMarkers(): void {
     // Appel du service pour faire une requête HTTP
-    this.mapService.getMarkers().subscribe((data: Mark[]) => {
-      for (let i = 0; i < data.length; i++) {
-        const coordinates: [number, number] = [
-          data[i].lng,
-          data[i].lat,
-        ]
-        const newMarker = new CustomGeoJson(coordinates, {
-          message: data[i].city_ascii + ' (' + data[i].country + ') ' + data[i].temp + '°C',
-          image: data[i].picture,
-        });
-        newMarker.id = data[i].id;
-        this.markers.push(newMarker);
-        this.setMarkers;
-        this.loadImage;
-      }
-      // Je ne sais pas si les deux lignes suivantes sont nécessaires mais le marker ne s'affiche pas
-      // this.loadImage();
-      //this.setMarkers();
-    });
+    this.mapService.getMarkers().subscribe(
+      (data: Mark[]) => {
+        console.log(data);
+        for (let i = 0; i < data.length; i++) {
+          const coordinates: [number, number] = [
+            data[i].lng,
+            data[i].lat,
+          ]
+          const newMarker = new CustomGeoJson(coordinates, {
+            message: data[i].city_ascii + ' (' + data[i].country + ') ' + data[i].temp + '°C',
+            image: data[i].picture,
+          });
+          newMarker.id = data[i].id;
+          this.markers.push(newMarker);
+          this.iconId = data[i].picture!;
+        }
+      });
   }
 
   setMarkers(): void {
     // Mise à jour des données
     const features = new CustomFeatureCollection(this.markers);
-    this.source.setData(features);
+    console.log(this.markers);
+    console.log('Features: ')
+    console.log(features);
+    this.source.setData(features as FeatureCollection);
   }
 
   private initializeMap(): void {
@@ -130,6 +133,8 @@ export class MapBoxComponent {
     this.map.on('load', () => {
       this.createSource();
       this.createLayer();
+      this.setMarkers();
+      this.loadAllImages();
       // pour chaque clic sur la carte
       this.map.on('click', (event) => {
         // récupération des coordonées du clic
@@ -152,14 +157,8 @@ export class MapBoxComponent {
         this.weatherService.getWeatherFromCoords(coordinates[1], coordinates[0]).subscribe({
           next: (data) => {
             const {
-              // feels_like: feelsLike,
-              // humidity,
-              // pressure,
               temp,
-              // temp_max: tempMax,
-              // temp_min: tempMin,
             } = data.main;
-
             mark.city_ascii = data.name;
             mark.temp = (temp - 273.15);
             mark.picture = data.weather[0].icon;
@@ -172,33 +171,20 @@ export class MapBoxComponent {
             console.log('Tentative d enregistrement du marqueur en bdd...');
             this.mapService.addMark(mark).subscribe(response =>
               console.log(response));
+
+            // création d'un nouveau marqueur CustomGeoJson
+            const newMarker = new CustomGeoJson(coordinates, {
+              message: mark.city_ascii + ' (' + mark.country + ') ' + mark.temp + '°C',
+              image: mark.picture,
+              id: mark.id,
+            });
+            console.log(newMarker.properties.image);
+            this.markers.push(newMarker);
+            this.loadImage(newMarker.properties.image);
+            // Ajout du marqueur sur la carte (Mise à jour des marqueurs)
+            this.setMarkers();
           }
         });
-
-        // création d'un nouveau marqueur CustomGeoJson
-        const newMarker = new CustomGeoJson(coordinates, {
-          message: mark.city_ascii + ' (' + mark.country + ') ' + mark.temp + '°C',
-          image: mark.picture,
-        });
-        newMarker.id = mark.id;
-        this.markers.push(newMarker);
-
-        // Chargement de l'image du marqueur
-        this.loadImage();
-        // Ajout du marqueur sur la carte
-        this.setMarkers();
-
-        // // Méthode de Jacques
-        // // ajout du marqueur en base de données
-        // this.mapService.createMarker(newMarker).subscribe((data) => {
-        //   this.markers.push(data);
-        //   // Chargement de l'image du marqueur
-        //   this.loadImage();
-        //   // Ajout du marqueur sur la carte
-        //   this.setMarkers();
-        // });
-
-
       });
     });
 
@@ -261,24 +247,31 @@ export class MapBoxComponent {
     */
   }
 
-  loadImage() {
-    let url: string = `http://openweathermap.org/img/wn/${this.iconId}@2x.png`;
-
-    if (this.toggleButtonState == 'classical') {
-      url = `assets/marker-icons/mapbox-marker-icon-20px-${this.iconId}.png`;
+  loadAllImages() {
+    for (let marker of this.markers) {
+      this.loadImage(marker.properties.image);
     }
+  }
+
+  loadImage(imageId: string) {
+    let url: string = `http://openweathermap.org/img/wn/${imageId}@2x.png`;
+
+    // if (this.toggleButtonState == 'classical') {
+    //   url = `assets/marker-icons/mapbox-marker-icon-20px-${this.iconId}.png`;
+    // }
 
     // Vérification si l'image est déjà chargée ou non
-    if (this.map.hasImage(this.iconId)) return;
+    if (this.map.hasImage(imageId)) return;
 
     // téléchargement de l'image
+    console.log(imageId);
     this.map.loadImage(
       // `assets/marker-icons/mapbox-marker-icon-20px-${color}.png`,
       url,
       (error, image) => {
         if (error) throw error;
 
-        this.map.addImage(this.iconId, image!);
+        this.map.addImage(imageId, image!);
       }
     );
   }
